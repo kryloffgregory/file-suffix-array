@@ -11,14 +11,14 @@ type Int64Array struct {
 }
 
 func NewFileArray(fileName string, size int64) *Int64Array {
-	file,err:=os.Create(fileName)
-	if err!=nil {
+	file, err := os.Create(fileName)
+	if err != nil {
 		panic(err)
 	}
 
-	for  i :=int64(0); i < size; i++ {
-		_, err:=file.Write([]byte{0,0,0,0,0,0,0,0})
-		if err!=nil {
+	for i := int64(0); i < size; i++ {
+		_, err := file.Write([]byte{0, 0, 0, 0, 0, 0, 0, 0})
+		if err != nil {
 			panic(err)
 		}
 	}
@@ -30,9 +30,9 @@ func NewFileArray(fileName string, size int64) *Int64Array {
 }
 
 func (a *Int64Array) ReadAt(offset int64) int64 {
-	buf:=make([]byte, 8)
-	_, err:= a.file.ReadAt(buf, offset * 8)
-	if err!=nil {
+	buf := make([]byte, 8)
+	_, err := a.file.ReadAt(buf, offset*8)
+	if err != nil {
 		panic(err)
 	}
 
@@ -54,16 +54,16 @@ func (a *Int64Array) Dec(offset int64) {
 }
 
 func (a *Int64Array) Remove() {
-	err:=os.Remove(a.file.Name())
-	if err!=nil {
+	err := os.Remove(a.file.Name())
+	if err != nil {
 		panic(err)
 	}
 }
 
 func (a *Int64Array) Clean() {
-	for i :=int64(0); i < a.Size; i++ {
-		_, err:=a.file.WriteAt([]byte{0,0,0,0,0,0,0,0}, i*8)
-		if err!=nil {
+	for i := int64(0); i < a.Size; i++ {
+		_, err := a.file.WriteAt([]byte{0, 0, 0, 0, 0, 0, 0, 0}, i*8)
+		if err != nil {
 			panic(err)
 		}
 	}
